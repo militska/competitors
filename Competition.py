@@ -1,22 +1,13 @@
-import json
-from WhetherFacade import WhetherFacade
-from Car import Car
-
-
-class Singleton(type):
-    _instances = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
+from Facade import Facade
+from Singleton import Singleton
 
 
 class Competition(metaclass=Singleton):
     speed_wind = 0
     cars = []
-    result_table = []
+    facade = None
     instance = None
+    # для демонстрации
     need_set_car = True
 
     def __init__(self):
@@ -24,23 +15,22 @@ class Competition(metaclass=Singleton):
         self.set_init_data()
 
     def set_speed_wind(self):
-        weather = WhetherFacade()
-        self.speed_wind = weather.get_speed_wind()
+        self.speed_wind = self.facade.get_speed_wind()
 
     def set_cars(self):
-        json_data = open('data_cars.json').read()
-        data = json.loads(json_data)
-
+        data = self.facade.get_data()
         for car_name in data:
-            car_object = Car()
-            car_object.name = car_name
-            car_object.max_speed = data[car_name]['max_speed']
-            car_object.drag_coef = data[car_name]['drag_coef']
-            car_object.time_to_max = data[car_name]['time_to_max']
+            car = self.facade.create_car(
+                car_name,
+                data[car_name]['max_speed'],
+                data[car_name]['drag_coef'],
+                data[car_name]['time_to_max']
+            )
 
-            self.cars.append(car_object)
+            self.cars.append(car)
 
     def set_init_data(self):
+        self.facade = Facade()
         self.set_speed_wind()
         if (self.need_set_car):
             self.set_init_car_data()

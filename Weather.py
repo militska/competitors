@@ -1,5 +1,8 @@
 from random import randint
 
+
+# методы пустышки, нужны для демонстрации пркоси и фасада
+
 class Weather:
     speed_wind = 0
 
@@ -20,5 +23,3 @@ class Weather:
 
     def get_next_wind(self):
         pass
-
-

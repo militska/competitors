@@ -17,18 +17,15 @@ class Competition(metaclass=Singleton):
     cars = []
     result_table = []
     instance = None
-
+    need_set_car = True
 
     def __init__(self):
         print("* * * Competitions.__init__ * * *")
-        self.set_speed_wind()
-        self.set_cars()
-
+        self.set_init_data()
 
     def set_speed_wind(self):
         weather = WhetherFacade()
         self.speed_wind = weather.get_speed_wind()
-
 
     def set_cars(self):
         json_data = open('data_cars.json').read()
@@ -43,6 +40,13 @@ class Competition(metaclass=Singleton):
 
             self.cars.append(car_object)
 
+    def set_init_data(self):
+        self.set_speed_wind()
+        if (self.need_set_car):
+            self.set_init_car_data()
+
+    def set_init_car_data(self):
+        self.set_cars()
 
     def start(self, distance):
         for car in self.cars:

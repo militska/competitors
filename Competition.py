@@ -3,19 +3,32 @@ from Weather import Weather
 from Car import Car
 
 
-class Competition:
+class Singleton(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+
+class Competition(metaclass=Singleton):
     speed_wind = 0
     cars = []
     result_table = []
+    instance = None
+
 
     def __init__(self):
         print("* * * Competitions.__init__ * * *")
         self.set_speed_wind()
         self.set_cars()
 
+
     def set_speed_wind(self):
         weather = Weather()
         self.speed_wind = weather.get_speed_wind()
+
 
     def set_cars(self):
         json_data = open('data_cars.json').read()
@@ -29,6 +42,7 @@ class Competition:
             car_object.time_to_max = data[car_name]['time_to_max']
 
             self.cars.append(car_object)
+
 
     def start(self, distance):
         for car in self.cars:
@@ -47,4 +61,3 @@ class Competition:
                 competitor_time += float(1) / _speed
 
             print("Car <%s> result: %f" % (car.name, competitor_time))
-

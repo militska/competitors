@@ -1,5 +1,5 @@
 import json
-from Weather import Weather
+from WhetherFacade import WhetherFacade
 from Car import Car
 
 
@@ -26,7 +26,7 @@ class Competition(metaclass=Singleton):
 
 
     def set_speed_wind(self):
-        weather = Weather()
+        weather = WhetherFacade()
         self.speed_wind = weather.get_speed_wind()
 
 

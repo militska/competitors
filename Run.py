@@ -1,5 +1,8 @@
 from Competition import Competition
 
+round1 = Competition()
+print(round1.start(12))
+
 round2 = Competition()
 print(round2.start(16))
 

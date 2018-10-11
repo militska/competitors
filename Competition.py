@@ -1,5 +1,6 @@
 from Facade import Facade
 from Singleton import Singleton
+from var_dump import var_dump
 
 
 class Competition(metaclass=Singleton):
@@ -18,16 +19,12 @@ class Competition(metaclass=Singleton):
         self.speed_wind = self.facade.get_speed_wind()
 
     def set_cars(self):
-        data = self.facade.get_data()
+        facade = self.facade
+        data = facade.get_data()
         for car_name in data:
-            car = self.facade.create_car(
-                car_name,
-                data[car_name]['max_speed'],
-                data[car_name]['drag_coef'],
-                data[car_name]['time_to_max']
+            self.cars.append(
+                facade.create_car(car_name, data[car_name])
             )
-
-            self.cars.append(car)
 
     def set_init_data(self):
         self.facade = Facade()
@@ -43,8 +40,6 @@ class Competition(metaclass=Singleton):
             competitor_time = 0
 
             for distance in range(distance):
-                _wind_speed = self.speed_wind
-
                 if competitor_time == 0:
                     _speed = 1
                 else:

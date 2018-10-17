@@ -1,7 +1,7 @@
 from common.Facade import Facade
 from components.Singleton import Singleton
-from competition.DefaultStrategy import DefaultStrategy
-from competition.ContextStrategy import ContextStrategy
+from modules.competition.DefaultStrategy import DefaultStrategy
+from modules.competition.ContextStrategy import ContextStrategy
 
 
 class Competition(metaclass=Singleton):

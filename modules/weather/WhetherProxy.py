@@ -1,4 +1,4 @@
-from weather.Weather import Weather
+from modules.weather.Weather import Weather
 
 
 class WhetherProxy:

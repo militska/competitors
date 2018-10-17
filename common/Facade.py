@@ -1,6 +1,6 @@
-from weather.WhetherProxy import WhetherProxy
-from car.CarFactory import CarFactory
-from car.Data import Data
+from modules.weather.WhetherProxy import WhetherProxy
+from modules.car.CarFactory import CarFactory
+from modules.car.Data import Data
 
 
 # называть класс паттерном неправильно

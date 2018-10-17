@@ -1,6 +1,7 @@
 from common.Facade import Facade
 from components.Singleton import Singleton
 from competition.DefaultStrategy import DefaultStrategy
+from competition.ContextStrategy import ContextStrategy
 
 
 class Competition(metaclass=Singleton):
@@ -11,6 +12,7 @@ class Competition(metaclass=Singleton):
 
     def __init__(self):
         print("* * * Competitions.__init__ * * *")
+        self.facade = Facade()
         self.set_init_data()
 
     def set_cars(self):
@@ -22,12 +24,12 @@ class Competition(metaclass=Singleton):
             )
 
     def set_init_data(self):
-        self.facade = Facade()
         self.speed_wind = self.facade.get_speed_wind()
         self.set_cars()
 
     def start(self, distance):
         for car in self.cars:
-            competitor_time = DefaultStrategy().execute(self, car, distance)
+            contx = ContextStrategy(DefaultStrategy())
+            competitor_time = contx.execute(context=self, car=car, distance=distance)
 
             print("Car <%s> result: %f" % (car.name, competitor_time))

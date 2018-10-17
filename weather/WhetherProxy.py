@@ -1,4 +1,4 @@
-from Weather import Weather
+from weather.Weather import Weather
 
 
 class WhetherProxy:

@@ -8,7 +8,7 @@ class Competition(metaclass=Singleton):
     speed_wind = 0
     cars = []
     facade = None
-    instance = None
+    strategy_competition = DefaultStrategy()
 
     def __init__(self):
         print("* * * Competitions.__init__ * * *")
@@ -29,7 +29,7 @@ class Competition(metaclass=Singleton):
 
     def start(self, distance):
         for car in self.cars:
-            contx = ContextStrategy(DefaultStrategy())
+            contx = ContextStrategy(self.strategy_competition)
             competitor_time = contx.execute(context=self, car=car, distance=distance)
 
             print("Car <%s> result: %f" % (car.name, competitor_time))

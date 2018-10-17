@@ -1,4 +1,4 @@
-from Car import Car
+from car.Car import Car
 
 
 class CarFactory:

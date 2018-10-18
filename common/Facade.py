@@ -6,6 +6,11 @@ from modules.car.Data import Data
 # называть класс паттерном неправильно
 class Facade:
 
+    car_factory = None
+
+    def __init__(self):
+        self.car_factory = CarFactory()
+
     def get_speed_wind(self):
         weather = WhetherProxy()
         return weather.get_speed_wind()
@@ -15,4 +20,4 @@ class Facade:
         return data.get_data_car()
 
     def create_car(self, name, params):
-        return CarFactory(name, params).create_car()
+        return self.car_factory.create(name, params)
